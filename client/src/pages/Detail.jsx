@@ -7,8 +7,8 @@ import BlogItemMedia from '../components/post-item/BlogItemMedia';
 import { useParams } from 'react-router-dom';
 import useGetDetailPost from '../hooks/useGetDetailPost';
 const Detail = () => {
-    const { id } = useParams();
-    const { dataDetailPost } = useGetDetailPost(id || 'asd')
+    const { slug } = useParams();
+    const { dataDetailPost } = useGetDetailPost(slug || '')
     return (
         <div className='page-container my-10 '>
             <div className='grid grid-cols-3 gap-10'>

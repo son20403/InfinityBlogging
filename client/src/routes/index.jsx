@@ -40,7 +40,7 @@ export const router = createBrowserRouter([
                 element: <Signup />,
             },
             {
-                path: "/detail-post/:id",
+                path: "/detail-post/:slug",
                 element: <Detail />,
             },
             {

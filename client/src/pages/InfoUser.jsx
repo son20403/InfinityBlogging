@@ -118,7 +118,7 @@ const InfoUser = () => {
                         <Heading>Bài viết của bạn</Heading>
                     </div>
                     <div className=' grid grid-cols-3 gap-10'>
-                        {dataPostByCustomer && dataPostByCustomer.length > 0 ? dataPostByCustomer.map((post) => (
+                        {dataPostByCustomer && dataPostByCustomer.length > 0 ? dataPostByCustomer.reverse().map((post) => (
                             <BlogItem key={post._id} data={post}></BlogItem>)) : 'Chua co bai viet nao'}
                     </div>
                 </section>

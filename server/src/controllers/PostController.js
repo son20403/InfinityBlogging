@@ -53,8 +53,8 @@ const PostController = {
     },
     detail: async (req, res) => {
         try {
-            const id = req.query.id;
-            const dataPost = await Post.findById(id);
+            const slug = req.query.slug;
+            const dataPost = await Post.findOne({ slug });
             if (!dataPost)
                 return res.status(400).json({
                     message: "Có lỗi xảy ra",

@@ -1,5 +1,6 @@
 import mongoose from "mongoose";
 const Schema = mongoose.Schema;
+const slug = require('mongoose-slug-plugin');
 
 
 const Customer = new Schema(
@@ -19,5 +20,10 @@ const Customer = new Schema(
         timestamps: true,
     }
 );
+Customer.plugin(slug, {
+    tmpl: '<%=user_name%>',
+    alwaysUpdate: true,
+    slugPaddingSize: 4
+});
 
 module.exports = mongoose.model("Customer", Customer);

@@ -11,9 +11,9 @@ export default class PostService {
         );
         return response.data;
     }
-    async detail(id) {
+    async detail(slug) {
         const response = await axios.get(
-            `${this.urlEndPoint}${this.collectionName}/detail?id=${id}`,
+            `${this.urlEndPoint}${this.collectionName}/detail?slug=${slug}`,
         );
         return response.data;
     }

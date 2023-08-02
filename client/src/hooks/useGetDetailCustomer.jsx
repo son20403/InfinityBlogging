@@ -4,9 +4,15 @@ const customerService = new CustomerService()
 export default function useGetDetailCustomer(id) {
     const [dataCustomer, setDataCustomer] = useState([]);
     const handleGetDataCustomer = async (id) => {
-        const data = await customerService.detailCustomer(id);
-        if (!data) return setDataCustomer([])
-        setDataCustomer(data)
+        try {
+            if (id) {
+                const data = await customerService.detailCustomer(id);
+                if (!data) return setDataCustomer([])
+                setDataCustomer(data)
+            }
+        } catch (error) {
+            console.log(error);
+        }
     }
     useEffect(() => {
         handleGetDataCustomer(id)

@@ -5,9 +5,15 @@ const categoryService = new CategoryService()
 export default function useGetDetailCategory(id) {
     const [dataCategory, setDataCategory] = useState([]);
     const handleGetDetailCategory = async (id) => {
-        const data = await categoryService.detailCategory(id);
-        if (!data) return setDataCategory([])
-        setDataCategory(data)
+        try {
+            if (id) {
+                const data = await categoryService.detailCategory(id);
+                if (!data) return setDataCategory([])
+                setDataCategory(data)
+            }
+        } catch (error) {
+            console.log(error);
+        }
     }
     useEffect(() => {
         handleGetDetailCategory(id)

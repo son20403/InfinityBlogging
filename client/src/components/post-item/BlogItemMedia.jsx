@@ -2,19 +2,22 @@ import React from 'react';
 import { Badge, Title } from '../text';
 import { ImagePost } from '../image';
 import Time from '../text/Time';
+import { Link } from 'react-router-dom';
+import useGetDetailCategory from '../../hooks/useGetDetailCategory';
 
-const BlogItemMedia = () => {
+const BlogItemMedia = ({ data }) => {
+    const { dataCategory } = useGetDetailCategory(data?.category);
     return (
-        <div className='flex gap-x-5 items-center mb-5'>
-            <ImagePost className={'w-[100px] h-[100px] rounded-lg'}></ImagePost>
+        <Link to={`/detail-post/${data?.slug}`} className='flex gap-x-5 items-center mb-5'>
+            <ImagePost src={data?.image} className={'w-[100px] h-[100px] rounded-lg'}></ImagePost>
             <div className=''>
-                <Title className=' text-sm mt-0'></Title>
+                <Title className=' text-sm mt-0'>{data?.title}</Title>
                 <div className='flex items-center justify-between'>
-                    <Badge >Game</Badge>
-                    <Time className='text-sm text-gray-500'></Time>
+                    <Badge >{dataCategory?.title}</Badge>
+                    <Time className='text-sm text-gray-500'>{data?.date}</Time>
                 </div>
             </div>
-        </div>
+        </Link>
     );
 };
 
