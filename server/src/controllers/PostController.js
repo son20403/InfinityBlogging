@@ -75,21 +75,28 @@ const PostController = {
             if (!dataPostDetail) return res.status(400).json({
                 message: "Bài viết này không tồn tại",
             });
-            const isLiked = await dataPostDetail.like.find((idcus) => idcus === id)
+            const isLiked = await dataPostDetail.likes?.find((idcus) => idcus === id)
             if (isLiked) return res.status(400).json({
-                message: "Bạn đã like bài viết này",
+                message: "Bạn đã thích bài viết này",
             });
             const status = await Post.updateOne(
                 { _id: id_post },
                 { $addToSet: { likes: id } }
             );
             if (status) {
-                res.status(200).send('Đã thêm ID người dùng vào mảng lượt thích');
+                return res.status(200).json({
+                    message: 'Cảm ơn bạn!',
+                });
             } else {
-                res.status(400).send('Đã thêm ID người dùng vào mảng lượt thích');
+                res.status(400).json({
+                    message: 'Có lỗi xảy ra'
+                });
             }
         } catch (err) {
-            res.status(500).send('Có lỗi xảy ra');
+            console.log(err);
+            res.status(500).json({
+                message: 'Có lỗi xảy ra'
+            });
         }
     },
     getAllPostByCustomer: async (req, res) => {
@@ -109,6 +116,66 @@ const PostController = {
             });
         }
     },
+    getPostByCategory: async (req, res) => {
+        const id = req.query.id;
+        try {
+            const dataPost = await Post.find({ category: id });
+            if (!dataPost) {
+                return res.status(400).json({
+                    message: "Có lỗi xảy ra",
+                });
+            }
+            return res.status(200).json(dataPost);
+        } catch (error) {
+            console.log(error);
+            return res.status(500).json({
+                message: "Lỗi Server",
+            });
+        }
+    },
+    getPostByCategory: async (req, res) => {
+        const id = req.query.id;
+        try {
+            const dataPost = await Post.find({ category: id });
+            if (!dataPost) {
+                return res.status(400).json({
+                    message: "Có lỗi xảy ra",
+                });
+            }
+            return res.status(200).json(dataPost);
+        } catch (error) {
+            console.log(error);
+            return res.status(500).json({
+                message: "Lỗi Server",
+            });
+        }
+    },
+    updateView: async (req, res) => {
+        const slug = req.query.slug;
+        try {
+            const dataPost = await Post.findOne({ slug });
+            if (!dataPost) {
+                return res.status(400).json({
+                    message: "Không tồn tại sản phẩm này",
+                });
+            }
+            const dataPostView = await Post.findByIdAndUpdate(dataPost._id, { views: dataPost.views + 1 });
+            if (!dataPostView) {
+                return res.status(400).json({
+                    message: "Có lỗi xảy ra",
+                });
+            }
+            return res.status(200).json({
+                message: "update thanh cong"
+            });
+        } catch (error) {
+            console.log(error);
+            return res.status(500).json({
+                message: "Lỗi Server",
+            });
+        }
+    },
+
 }
 
 module.exports = PostController

@@ -1,11 +1,14 @@
 import React from 'react';
+import LoadingSkeleton from '../loading/LoadingSkeleton';
 
 const ImagePost = ({ src, className }) => {
     return (
-        <>
+        <>  {!src ? <LoadingSkeleton className={className}></LoadingSkeleton> :
+
             <img
-                src={`${src || "https://wowtheme7.com/tf/kiante/assets/img/banner/2.jpg"}`}
+                src={`${src}`}
                 alt="" className={`${className} object-cover`} />
+        }
         </>
     );
 };

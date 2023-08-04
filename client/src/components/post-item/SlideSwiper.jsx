@@ -5,6 +5,7 @@ import SlideItem from './SlideItem';
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/free-mode';
+import LoadingSkeleton from '../loading/LoadingSkeleton';
 
 const SlideSwiper = ({ dataPost }) => {
     return (
@@ -12,20 +13,20 @@ const SlideSwiper = ({ dataPost }) => {
             <Swiper
                 initialSlide={1}
                 modules={[Navigation, Autoplay, FreeMode]}
-                spaceBetween={30}
-                slidesPerView={1.9}
+                spaceBetween={0}
+                slidesPerView={2}
                 navigation
                 centeredSlides={true}
                 speed={2000}
                 autoplay={{
                     delay: 3000,
-                    // disableOnInteraction: true
+                    disableOnInteraction: true
                 }}>
-                {dataPost && dataPost.length > 0 && dataPost.map(post => (
+                {dataPost && dataPost.length > 0 ? dataPost.map(post => (
                     <SwiperSlide key={post._id}>
                         <SlideItem post={post}></SlideItem>
                     </SwiperSlide>
-                ))}
+                )) : <LoadingSkeleton className={'w-full h-[400px]'}></LoadingSkeleton>}
             </Swiper>
         </section>
     );

@@ -21,7 +21,7 @@ const Customer = new Schema(
     }
 );
 Customer.plugin(slug, {
-    tmpl: '<%=user_name%>',
+    tmpl: '<%=full_name%>',
     alwaysUpdate: true,
     slugPaddingSize: 4
 });

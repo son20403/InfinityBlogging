@@ -4,20 +4,20 @@ import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 const postService = new PostService()
 
-export default function useGetDetailPost(slug) {
-
+export default function useGetAllPostByCustomer(id) {
     const navigate = useNavigate();
-    const [dataDetailPost, setDataPost] = useState([]);
+    const [dataPostByCustomer, setDataPostByCustomer] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
-    const handleGetDetailPost = async () => {
+
+    const handleGetDataPostByCustomer = async () => {
         setIsLoading(true)
         try {
-            if (slug) {
-                const data = await postService.detail(slug || '');
-                if (!data) return setDataPost([])
-                setDataPost(data)
+            if (id) {
+                const data = await postService.getAllPostByCustomer(id);
+                if (!data) return setDataPostByCustomer([])
+                setDataPostByCustomer(data.reverse())
             } else {
-                return setDataPost([])
+                return setDataPostByCustomer([])
             }
         } catch (error) {
             console.log(error);
@@ -27,8 +27,8 @@ export default function useGetDetailPost(slug) {
         setIsLoading(false)
     }
     useEffect(() => {
-        handleGetDetailPost()
-        return () => handleGetDetailPost()
-    }, [slug]);
-    return { dataDetailPost, isLoading, handleGetDetailPost }
+        handleGetDataPostByCustomer()
+        return () => handleGetDataPostByCustomer()
+    }, [id]);
+    return { dataPostByCustomer, isLoading }
 }

@@ -13,11 +13,16 @@ import { useAuth } from '../contexts/authContext';
 const authService = new AuthService()
 
 const schemaValidate = Yup.object({
-    user_name: Yup.string().required("Vui lòng nhập tên đăng nhập!"),
-    full_name: Yup.string().required("Vui lòng nhập tên đăng nhập!"),
+    user_name: Yup.string().required("Vui lòng nhập tên đăng nhập!")
+        .max(20, "Tên tài khoản không được dài quá 20 ký tự")
+        .min(6, 'Tên đăng nhập phải lớn hơn 6 kí tự'),
+    full_name: Yup.string().required("Vui lòng nhập họ và tên nhập!")
+        .max(22, "Tên không dài quá 23 ký tự")
+        .min(6, 'Tên đăng nhập phải lớn hơn 6 kí tự'),
     password: Yup.string()
         .required("Vui lòng nhập mật khẩu!")
-        .min(8, 'Mật khẩu có ít nhất 8 ký tự!')
+        .min(6, 'Mật khẩu có ít nhất 8 ký tự!')
+        .max(20, "Mật khẩu không được dài quá 20 ký tự")
         .matches(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
             'Mật khẩu cần có ít nhất 1 ký tự in hoa, 1 ký tự thường, 1 số và 1 ký tự đặt biệt!'),
     password_confirmation: Yup.string()

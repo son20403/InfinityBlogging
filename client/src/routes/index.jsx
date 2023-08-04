@@ -12,7 +12,8 @@ const Home = lazy(() => import("../pages/Home"));
 const Signin = lazy(() => import("../pages/Signin"));
 const Detail = lazy(() => import("../pages/Detail"));
 const InfoUser = lazy(() => import("../pages/InfoUser"));
-const AddPost = lazy(() => import("../pages/AddPost"));
+const PageAdd = lazy(() => import("../pages/PageAdd"));
+const ListAllPost = lazy(() => import("../pages/ListAllPost"));
 
 export const router = createBrowserRouter([
     {
@@ -49,12 +50,24 @@ export const router = createBrowserRouter([
             },
             {
                 path: "/add-post",
-                element: <AddPost />,
+                element: <PageAdd />,
+            },
+            {
+                path: "/list-all-post",
+                element: <ListAllPost />,
             },
         ]
     },
     {
         path: "*",
+        element:
+            <>
+                <NotFound404></NotFound404>
+            </>,
+        children: [
+        ]
+    }, {
+        path: "/not-found",
         element:
             <>
                 <NotFound404></NotFound404>

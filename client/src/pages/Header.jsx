@@ -7,7 +7,9 @@ import Avatar from '../components/post-item/Avatar';
 import UserSetting from '../components/dropdown/UserSetting';
 import { useAuth } from '../contexts/authContext';
 import { toast } from 'react-toastify';
+import PostService from '../services/post';
 
+const postService = new PostService()
 
 const listNav = [
     {
@@ -17,7 +19,7 @@ const listNav = [
     },
     {
         id: 2,
-        to: '/blog',
+        to: '/list-all-post',
         title: 'Bài viết'
     },
     {
@@ -37,6 +39,8 @@ const listNav = [
     },
 ]
 const Header = () => {
+    const navigate = useNavigate();
+
     const [openSearch, setOpenSearch] = useState(false);
     const { token, infoUser, setAccessToken, setInfoUser, deteteToken, deleteUserInfo } = useAuth();
     const handleLogout = () => {
@@ -46,6 +50,15 @@ const Header = () => {
         deleteUserInfo()
         toast.success("Đăng xuất thành công!", { pauseOnHover: false })
     }
+    const handleGetDataPost = async () => {
+        try {
+            const data = await postService.getAll();
+            if (!data || data.length < 1) return navigate('/*')
+        } catch (error) {
+            console.log(error);
+            navigate('/not-found')
+        }
+    }
 
     // const navigate = useNavigate();
     // useEffect(() => {
@@ -54,6 +67,9 @@ const Header = () => {
     //         navigate('/signin');
     //     }
     // }, [token, navigate]);
+    useEffect(() => {
+        handleGetDataPost()
+    }, []);
     return (
         <>
             <header className=' page-container flex justify-between items-center py-4 border-b'>

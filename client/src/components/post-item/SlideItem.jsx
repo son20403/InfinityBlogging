@@ -8,12 +8,14 @@ import useGetDetailCategory from '../../hooks/useGetDetailCategory';
 import { Badge, Title } from '../text';
 import { ImagePost } from '../image';
 import Time from '../text/Time';
+import useTimeSince from '../../hooks/useTimeSince';
 
 const SlideItem = ({ post }) => {
     const { dataCustomer } = useGetDetailCustomer(post.id_customer)
     const { dataCategory } = useGetDetailCategory(post.category)
+    const timeSince = useTimeSince()
     return (
-        <div className='relative rounded-lg overflow-hidden w-[800px] h-[533px]'>
+        <div className='relative rounded-lg overflow-hidden w-[750px] h-[400px]'>
             <Link to={`/detail-post/${post?.slug}`}>
                 <ImagePost src={post?.image} className={`w-full h-full`} />
                 <div className='overlay absolute inset-0 bg-gradient-to-t to-80% from-black'></div>
@@ -28,7 +30,7 @@ const SlideItem = ({ post }) => {
                         <Avatar urlImage={dataCustomer.image}></Avatar>
                         <Title className='text-sm'>{dataCustomer.full_name}</Title>
                     </Link>
-                    <Time>{post?.date}</Time>
+                    <Time>{timeSince(post?.timestamps)}</Time>
                 </div>
             </div>
         </div>

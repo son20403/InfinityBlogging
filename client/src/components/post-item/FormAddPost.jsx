@@ -1,16 +1,18 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
+import { toast } from 'react-toastify';
 import { FileInput, Input } from '../input';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as Yup from 'yup';
+
 import { Button } from '../button';
 import Textarea from '../input/Textarea';
 import Select from '../input/Select';
 import { getDate, getTimestamp } from '../../hooks/useGetTime';
-import PostService from '../../services/post';
 import { useAuth } from '../../contexts/authContext';
-import { toast } from 'react-toastify';
-import CategoryService from '../../services/category';
+import useGetAllCategory from '../../hooks/useGetAllCategory';
+import PostService from '../../services/post';
+
 const postService = new PostService()
 const schemaValidate = Yup.object().shape({
     title: Yup.string().required("Vui lòng nhập tên Tiêu đề!"),
@@ -18,11 +20,13 @@ const schemaValidate = Yup.object().shape({
     category: Yup.string().required("Vui lòng nhập loai!"),
     image: Yup.mixed().required("Vui lòng nhập ảnh!"),
 })
-const categoryService = new CategoryService()
 const FormAddPost = () => {
     const { handleSubmit, formState: { errors, isSubmitting, isValid }, control, reset } =
         useForm({ resolver: yupResolver(schemaValidate), mode: 'onBlur', });
+
     const { token } = useAuth()
+    const { dataCategory, handleGetDataCategory } = useGetAllCategory()
+
     const handleSubmitFormAddPost = async (values) => {
         const date = getDate()
         const timestamps = getTimestamp()
@@ -32,12 +36,7 @@ const FormAddPost = () => {
                 const postData = await postService.createPost(token, post)
                 if (postData) {
                     toast.success(postData.message)
-                    reset({
-                        category: '',
-                        content: '',
-                        image: null,
-                        title: ''
-                    })
+                    reset({ category: '', content: '', image: null, title: '' })
                     return
                 } else {
                     toast.error(postData.message || "Có lỗi xảy ra!")
@@ -49,26 +48,10 @@ const FormAddPost = () => {
             return
         }
     }
-
-    const [categoryData, setCategoryData] = useState({});
-    const handleGetCategory = async () => {
-        try {
-            const categoryData = await categoryService.getAll()
-            if (categoryData) {
-                setCategoryData(categoryData)
-            } else {
-                toast.error("Có lỗi xảy ra khi lấy danh mục!")
-            }
-
-        } catch (error) {
-            toast.error(error.response.data.message || "Có lỗi xảy ra!")
-            console.log(error);
-            return
-        }
-    }
     useEffect(() => {
-        handleGetCategory()
+        handleGetDataCategory()
     }, []);
+
     return (
         <div>
             <div className='p-5 my-5 rounded-lg '>
@@ -85,14 +68,15 @@ const FormAddPost = () => {
                                 control={control}
                                 name={'image'}
                                 errors={errors}
-                                lable={'Hình ảnh'}></FileInput>
+                                lable={'Hình ảnh'}>
+                            </FileInput>
                         </div>
                         <Select
                             control={control}
                             name={'category'}
                             errors={errors}
                             lable={'Loại'}
-                            data={categoryData}
+                            data={dataCategory}
                         >
                         </Select>
                         <div className='col-span-2'>

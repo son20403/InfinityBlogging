@@ -6,7 +6,8 @@ import { Field } from '../field';
 
 
 
-const Input = ({ type, name, placeholder, className = '', errors, lable, children, control, value = '', ...props }) => {
+const Input = ({ type, name, placeholder, className = '', errors, lable,
+    children, control, value = '', isSubmitting = false, ...props }) => {
     const { field } = useController({
         control, name, defaultValue: value
     })
@@ -16,6 +17,7 @@ const Input = ({ type, name, placeholder, className = '', errors, lable, childre
                 <Label htmlFor={name}>{lable}:</Label>
                 <div className='relative mt-3 w-full'>
                     <input type={type} id={name}
+                        disabled={isSubmitting}
                         className={` py-3 text-sm  bg-gray-200 w-full rounded-lg outline-none
                         focus:shadow-[0px_0px_0px_3px_rgba(51,_159,_254,_0.5)]
                         focus:bg-white

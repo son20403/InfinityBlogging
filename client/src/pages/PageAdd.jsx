@@ -8,7 +8,7 @@ import {
 import FormAddPost from '../components/post-item/FormAddPost';
 import FormAddCategory from '../components/post-item/FormAddCategory';
 
-const AddPost = () => {
+const PageAdd = () => {
     return (
         <div>
             <section className='page-container min-h-screen'>
@@ -18,7 +18,7 @@ const AddPost = () => {
     );
 };
 
-export default AddPost;
+export default PageAdd;
 
 
 function TabsFill() {

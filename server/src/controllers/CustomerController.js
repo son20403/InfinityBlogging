@@ -41,11 +41,8 @@ const CustomerController = {
         const id = req.customer.id;
         const formData = req.body;
         const fileData = req.file;
-        console.log("🚀 ~ file: CustomerController.js:44 ~ updateCustomer ~ fileData:", fileData)
-
         let newImage = fileData?.path || '';
         let newIdImage = fileData?.filename || '';
-
         try {
             const hasCustomer = await Customer.findOne({ _id: id });
             if (!hasCustomer) {
@@ -59,7 +56,6 @@ const CustomerController = {
                 newImage = hasCustomer.image;
                 newIdImage = hasCustomer.id_image;
             }
-
             const dataCustomer = await Customer.findByIdAndUpdate(
                 id, { ...formData, image: newImage, id_image: newIdImage, id }, {
                 new: true,

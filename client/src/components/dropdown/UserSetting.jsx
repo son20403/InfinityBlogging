@@ -60,13 +60,13 @@ const UserSetting = ({ children, onClick = () => { }, isUser }) => {
                                     {navListHasUser.map(nav => (
                                         <NavLink key={nav.id} to={nav.to}
                                             className={({ isActive }) =>
-                                                (`p-4 flex items-center gap-5 ${isActive ? "text-red-500 " : ""}`)}>
+                                            (`p-4 flex items-center gap-5 cursor-pointer 
+                                                ${isActive ? "text-red-500 " : ""}`)}>
                                             <FontAwesomeIcon icon={nav.icon} /> {nav.title}</NavLink>
-
                                     ))}
                                 </div>
                                 <div onClick={onClick}
-                                    className="p-4 flex items-center gap-5">
+                                    className="p-4 flex items-center gap-5 cursor-auto">
                                     <FontAwesomeIcon icon={faRightFromBracket} /> Đăng xuất</div>
                             </SettingUserDropDown>)
                             :
@@ -74,7 +74,8 @@ const UserSetting = ({ children, onClick = () => { }, isUser }) => {
                                 {navListNotUser.map(nav => (
                                     <NavLink key={nav.id} to={nav.to}
                                         className={({ isActive }) =>
-                                            (`p-4 border-b last:border-b-0 flex items-center gap-5 ${isActive ? "text-red-500 " : ""}`)}>
+                                        (`p-4 border-b last:border-b-0 flex items-center gap-5
+                                            ${isActive ? "text-red-500 " : ""}`)}>
                                         <FontAwesomeIcon icon={nav.icon} /> {nav.title}</NavLink>
                                 ))}
                             </SettingUserDropDown>)

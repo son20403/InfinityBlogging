@@ -11,9 +11,28 @@ export default class PostService {
         );
         return response.data;
     }
+    async getPostByCategory(id) {
+        const response = await axios.get(
+            `${this.urlEndPoint}${this.collectionName}/getPostByCategory?id=${id}`,
+        );
+        return response.data;
+    }
     async detail(slug) {
         const response = await axios.get(
             `${this.urlEndPoint}${this.collectionName}/detail?slug=${slug}`,
+        );
+        return response.data;
+    }
+    async like(token, id) {
+        const response = await axios.put(
+            `${this.urlEndPoint}${this.collectionName}/like?id=${id}`, {},
+            { headers: { token: `Bearer ${token}` } }
+        );
+        return response.data;
+    }
+    async updateView(slug) {
+        const response = await axios.put(
+            `${this.urlEndPoint}${this.collectionName}/updateView?slug=${slug}`, {}
         );
         return response.data;
     }
