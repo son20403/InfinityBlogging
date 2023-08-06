@@ -17,6 +17,7 @@ import Time from '../text/Time';
 import useGetAllCommentByPost from '../../hooks/useGetAllCommentByPost';
 import useGetDetailCustomer from '../../hooks/useGetDetailCustomer';
 import { Link } from 'react-router-dom';
+import useTimeSince from '../../hooks/useTimeSince';
 
 const commentService = new CommentService()
 
@@ -24,7 +25,7 @@ const schemaValidate = Yup.object({
     content: Yup.string().required("Vui lòng nhập nội dung bình luận!"),
 })
 
-const Comment = ({ showComment, setShowComment, id_post, setTotalComment = () => { } }) => {
+const Comment = ({ showComment, setShowComment, id_post, setTotalComment = () => { }, id_customer }) => {
 
     const { handleSubmit, formState: { errors, isSubmitting, isValid }, control, reset } =
         useForm({ resolver: yupResolver(schemaValidate), mode: 'onSubmit', });
@@ -81,7 +82,7 @@ const Comment = ({ showComment, setShowComment, id_post, setTotalComment = () =>
                         </form>
                         <div className=' w-full border-t pt-5 m-auto  h-52 flex-1 overflow-y-auto overscroll-none'>
                             {dataCommentByPost && totalComment > 0 ? dataCommentByPost.map((comment) => (
-                                <CommentItem key={comment._id} data={comment}></CommentItem>
+                                <CommentItem key={comment._id} id_customer={id_customer} data={comment} ></CommentItem>
                             )) : (<Title className={' text-center col-span-3 font-bold text-xl text-red-500 '}>
                                 Chưa có bình luận nào</Title>)}
                         </div>
@@ -91,8 +92,11 @@ const Comment = ({ showComment, setShowComment, id_post, setTotalComment = () =>
         </>
     );
 };
-const CommentItem = ({ data }) => {
-    const { dataCustomer } = useGetDetailCustomer(data.id_customer)
+const CommentItem = ({ data, id_customer }) => {
+    const timeSince = useTimeSince()
+
+    const { dataCustomer } = useGetDetailCustomer(data.id_customer);
+    const isAuthor = dataCustomer?._id === id_customer
     return (
         <>
             <div className='flex items-start gap-5 mb-10'>
@@ -101,10 +105,11 @@ const CommentItem = ({ data }) => {
                 </Link>
                 <div className='text-sm flex-1'>
                     <div className=' flex gap-10 items-center'>
-                        <Link to={`/info-user/${dataCustomer?._id}`}>
-                            <Title className={' text-lg font-bold'}>{dataCustomer?.full_name}</Title>
+                        <Link to={`/info-user/${dataCustomer?._id}`} className='flex items-center gap-x-2'>
+                            <Title className={' text-lg font-bold'}>{dataCustomer?.full_name}
+                            </Title>  {isAuthor && <span> (Tác giả)</span>}
                         </Link>
-                        <Time>{data.date}</Time>
+                        <Time>{timeSince(data.timestamps)}</Time>
                     </div>
                     {data.content}
                 </div>

@@ -21,8 +21,7 @@ export default function useGetDetailPost(slug) {
             }
         } catch (error) {
             console.log(error);
-            // toast.error("Có lỗi xảy ra khi lấy bài viết!")
-            // navigate('/*')
+            navigate('/not-found')
         }
         setIsLoading(false)
     }

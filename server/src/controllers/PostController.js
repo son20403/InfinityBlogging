@@ -1,5 +1,6 @@
 import Post from '../models/Post'
 const cloudinary = require("cloudinary").v2;
+const _ = require("lodash");
 
 const PostController = {
     create: async (req, res) => {
@@ -175,6 +176,30 @@ const PostController = {
             });
         }
     },
+    async search(req, res) {
+        try {
+            const key = req.query.key;
+            const $regex = _.escapeRegExp(key);
+            const $options = _.escapeRegExp("i");
+            const query = {
+                $or: [
+                    { title: { $regex, $options } },
+                    { slug: { $regex, $options } },
+                ],
+            };
+            const dataPost = await Post.find(query);
+            if (!dataPost)
+                return res.status(400).json({
+                    message: "Có lỗi xảy ra",
+                });
+            return res.status(200).json(dataPost);
+        } catch (error) {
+            console.log(error);
+            return res.status(500).json({
+                message: "Lỗi Server",
+            });
+        }
+    }
 
 }
 

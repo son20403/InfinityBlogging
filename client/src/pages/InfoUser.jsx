@@ -12,21 +12,26 @@ import BlogItemLoading from '../components/loading/BlogItemLoading';
 import useGetDetailCustomer from '../hooks/useGetDetailCustomer';
 import useGetAllPostByCustomer from '../hooks/useGetAllPostByCustomer';
 import EditInfoUser from '../components/post-item/EditInfoUser';
+import Pagination from '../components/post-item/Pagination';
 
 const InfoUser = () => {
 
     const { id } = useParams();
-
     const { infoUser } = useAuth();
+    const { dataCustomer, handleGetDataCustomer, isLoading } = useGetDetailCustomer(id)
+    const { dataPostByCustomer } = useGetAllPostByCustomer(id)
 
     const [openEditInfo, setOpenEditInfo] = useState(false);
+    const [currentPage, setCurrentPage] = useState(1);
 
-    const { dataCustomer, handleGetDataCustomer, isLoading } = useGetDetailCustomer(id)
-
-    const { dataPostByCustomer } = useGetAllPostByCustomer(id)
     const total = dataPostByCustomer.length
     const totalViews = dataPostByCustomer.reduce((total, post) => total + post.views, 0)
     const isValidUser = dataCustomer?._id === infoUser?._id
+
+    const postsPerPage = 6;
+    const indexOfLastPost = currentPage * postsPerPage;
+    const indexOfFirstPost = indexOfLastPost - postsPerPage;
+    const currentPosts = dataPostByCustomer?.slice(indexOfFirstPost, indexOfLastPost);
 
     useEffect(() => {
         handleGetDataCustomer()
@@ -65,8 +70,11 @@ const InfoUser = () => {
                         </div>
                     </div>
                     <div className='col-span-3'>
-                        <Heading>Bài viết của bạn</Heading>
+                        <Heading>Bài viết của {dataCustomer?.full_name}</Heading>
                     </div>
+                    <Pagination currentPage={currentPage}
+                        setCurrentPage={setCurrentPage}
+                        dataPost={dataPostByCustomer} postsPerPage={postsPerPage} />
                     <div className=' grid grid-cols-3 gap-10'>
                         {isLoading && (
                             <>
@@ -75,8 +83,8 @@ const InfoUser = () => {
                                 <BlogItemLoading></BlogItemLoading>
                             </>
                         )}
-                        {!isLoading && dataPostByCustomer && dataPostByCustomer?.length > 0
-                            ? dataPostByCustomer.map((post) => (
+                        {!isLoading && currentPosts && currentPosts?.length > 0
+                            ? currentPosts.map((post) => (
                                 <BlogItem key={post._id} data={post}></BlogItem>))
                             :
                             (<Title className={' text-center col-span-3 font-bold text-xl text-red-500 '}>

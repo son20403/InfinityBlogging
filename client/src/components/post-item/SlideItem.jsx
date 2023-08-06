@@ -21,7 +21,12 @@ const SlideItem = ({ post }) => {
                 <div className='overlay absolute inset-0 bg-gradient-to-t to-80% from-black'></div>
             </Link>
             <div className='absolute bottom-10 mx-10 text-white'>
-                <Badge>{dataCategory?.title}</Badge>
+
+                <Badge>
+                    <Link to={`/list-post-category/${dataCategory.slug}`}>
+                        {dataCategory?.title}
+                    </Link>
+                </Badge>
                 <Link to={`/detail-post/${post?.slug}`}>
                     <Title className=' text-3xl leading-10'>{post.title}</Title>
                 </Link>

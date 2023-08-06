@@ -26,4 +26,10 @@ export default class CategoryService {
         );
         return response.data;
     }
+    async detailCategoryBySlug(slug) {
+        const response = await axios.get(
+            `${this.urlEndPoint}${this.collectionName}/detailCategoryBySlug?slug=${slug}`,
+        );
+        return response.data;
+    }
 }

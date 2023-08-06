@@ -14,7 +14,7 @@ export default function useGetAllCommentByPost(id) {
             if (id) {
                 const data = await commentService.getCommentByPost(id);
                 if (!data) return setDataCommentByPost([])
-                setDataCommentByPost(data)
+                setDataCommentByPost(data.reverse())
             } else {
                 return setDataCommentByPost([])
             }

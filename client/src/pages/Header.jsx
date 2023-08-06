@@ -8,6 +8,7 @@ import UserSetting from '../components/dropdown/UserSetting';
 import { useAuth } from '../contexts/authContext';
 import { toast } from 'react-toastify';
 import PostService from '../services/post';
+import FormSearch from '../components/post-item/FormSearch';
 
 const postService = new PostService()
 
@@ -19,7 +20,7 @@ const listNav = [
     },
     {
         id: 2,
-        to: '/list-all-post',
+        to: '/list-all-post?query=',
         title: 'Bài viết'
     },
     {
@@ -59,14 +60,14 @@ const Header = () => {
             navigate('/not-found')
         }
     }
+    const [query, setQuery] = useState('');
 
-    // const navigate = useNavigate();
-    // useEffect(() => {
-    //     if (token === null || token === '' || token === 'undefined') {
-    //         toast.error("Ban Chua Dang Nhap")
-    //         navigate('/signin');
-    //     }
-    // }, [token, navigate]);
+    const handleSubmitSearch = (e) => {
+        e.preventDefault()
+        navigate(`/list-all-post?query=${query}`)
+        setOpenSearch(false)
+    }
+
     useEffect(() => {
         handleGetDataPost()
     }, []);
@@ -87,7 +88,7 @@ const Header = () => {
                 </div>
                 <div className='flex gap-x-10 items-center'>
                     <div className='cursor-pointer' onClick={() => setOpenSearch(true)}>
-                        <span><FontAwesomeIcon icon={faMagnifyingGlass} /></span>
+                        <label htmlFor='input-search'><FontAwesomeIcon icon={faMagnifyingGlass} /></label>
                     </div>
                     <UserSetting isUser={token ? true : false} onClick={handleLogout}>
                         {token ?
@@ -99,14 +100,9 @@ const Header = () => {
                 </div>
             </header>
             <ModalAdvanced visible={openSearch} onClose={() => setOpenSearch(false)} heading='Search'>
-                <form className='w-full min-w-[700px] relative my-10'>
-                    <input type="text"
-                        className='w-full py-3 px-5 outline-none border rounded-lg
-                            focus:shadow-[0px_0px_0px_3px_rgba(51,_159,_254,_0.5)]' placeholder='search...' />
-                    <button
-                        className='absolute right-5 top-1/2 -translate-y-2/4'>
-                        <FontAwesomeIcon icon={faMagnifyingGlass} /></button>
-                </form>
+                <div className='w-[800px]'>
+                    <FormSearch setOpenSearch={() => setOpenSearch(false)}></FormSearch>
+                </div>
             </ModalAdvanced>
         </>
     );

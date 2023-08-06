@@ -5,6 +5,7 @@ import middlewareAuth from '../middlewares/auth'
 
 router.post('/create', middlewareAuth.verifyToken, CategoryController.create)
 router.get('/getAll', CategoryController.getAll)
+router.get('/detailCategoryBySlug?:slug', CategoryController.detailCategoryBySlug)
 router.get('/detailCategory?:id', CategoryController.detailCategory)
 router.get('/detail', CategoryController.detail)
 

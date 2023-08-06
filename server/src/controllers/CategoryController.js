@@ -78,6 +78,22 @@ const CategoryController = {
                 message: "Lỗi Server",
             });
         }
+    },
+    async detailCategoryBySlug(req, res) {
+        try {
+            const slug = req.query.slug;
+            const dataCus = await Categories.findOne({ slug });
+            if (!dataCus)
+                return res.status(400).json({
+                    message: "Có lỗi xảy ra",
+                });
+            return res.status(200).json(dataCus);
+        } catch (error) {
+            console.log(error);
+            return res.status(500).json({
+                message: "Lỗi Server",
+            });
+        }
     }
 }
 

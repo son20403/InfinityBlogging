@@ -66,4 +66,10 @@ export default class PostService {
         );
         return response.data;
     }
+    async search(key) {
+        const response = await axios.get(
+            `${this.urlEndPoint}${this.collectionName}/search?key=${key}`,
+        );
+        return response.data;
+    }
 }

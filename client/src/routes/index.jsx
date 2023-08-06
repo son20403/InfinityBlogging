@@ -14,6 +14,7 @@ const Detail = lazy(() => import("../pages/Detail"));
 const InfoUser = lazy(() => import("../pages/InfoUser"));
 const PageAdd = lazy(() => import("../pages/PageAdd"));
 const ListAllPost = lazy(() => import("../pages/ListAllPost"));
+const ListPostByCategory = lazy(() => import("../pages/ListPostByCategory"));
 
 export const router = createBrowserRouter([
     {
@@ -55,6 +56,10 @@ export const router = createBrowserRouter([
             {
                 path: "/list-all-post",
                 element: <ListAllPost />,
+            },
+            {
+                path: "/list-post-category/:slug",
+                element: <ListPostByCategory />,
             },
         ]
     },

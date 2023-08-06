@@ -37,6 +37,7 @@ const FormAddPost = () => {
                 if (postData) {
                     toast.success(postData.message)
                     reset({ category: '', content: '', image: null, title: '' })
+
                     return
                 } else {
                     toast.error(postData.message || "Có lỗi xảy ra!")

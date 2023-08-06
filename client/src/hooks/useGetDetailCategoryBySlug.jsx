@@ -4,20 +4,20 @@ import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 const categoryService = new CategoryService()
 
-export default function useGetDetailCategory(id) {
+export default function useGetDetailCategoryBySlug(slug) {
 
     const navigate = useNavigate();
-    const [dataCategory, setDataCategory] = useState([]);
+    const [dataCategoryBySlug, setDataCategoryBySlug] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
-    const handleGetDetailCategory = async () => {
+    const handleGetDetailCategoryBySlug = async () => {
         setIsLoading(true)
         try {
-            if (id) {
-                const data = await categoryService.detailCategory(id);
-                if (!data) return setDataCategory([])
-                setDataCategory(data)
+            if (slug) {
+                const data = await categoryService.detailCategoryBySlug(slug);
+                if (!data) return setDataCategoryBySlug([])
+                setDataCategoryBySlug(data)
             } else {
-                return setDataCategory([])
+                return setDataCategoryBySlug([])
             }
         } catch (error) {
             console.log(error);
@@ -27,8 +27,8 @@ export default function useGetDetailCategory(id) {
         setIsLoading(false)
     }
     useEffect(() => {
-        handleGetDetailCategory()
-        return () => handleGetDetailCategory()
-    }, [id]);
-    return { dataCategory, isLoading }
+        handleGetDetailCategoryBySlug()
+        return () => handleGetDetailCategoryBySlug()
+    }, [slug]);
+    return { dataCategoryBySlug, isLoading }
 }

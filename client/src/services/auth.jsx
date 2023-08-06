@@ -19,4 +19,11 @@ export default class AuthService {
         );
         return response.data;
     }
+    async getDataCustomer(token) {
+        const response = await axios.get(
+            `${this.urlEndPoint}${this.collectionName}/getDataCustomer`,
+            { headers: { token: `Bearer ${token}` } }
+        );
+        return response.data;
+    }
 }

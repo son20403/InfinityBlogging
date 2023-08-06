@@ -21,7 +21,7 @@ export default function useGetDetailCustomer(id) {
         } catch (error) {
             console.log(error);
             // toast.error("Có lỗi xảy ra khi lấy người dùng!")
-            // navigate('/*')
+            navigate('/not-found')
         }
         setIsLoading(false)
     }

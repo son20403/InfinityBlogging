@@ -17,9 +17,9 @@
 
 @layer components {
   .page-container {
+    width: 100%;
     max-width: 1280px;
-    margin-left: auto;
-    margin-right: auto;
+    margin: auto;
   }
 
 
@@ -259,3 +259,5 @@
 ::-webkit-scrollbar-thumb:hover {
   background: #555;
 }
+
+/*  */
