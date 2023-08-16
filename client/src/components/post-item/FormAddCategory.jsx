@@ -7,6 +7,7 @@ import { Button } from '../button';
 import CategoryService from '../../services/category';
 import { useAuth } from '../../contexts/authContext';
 import { toast } from 'react-toastify';
+import { getDate, getTimestamp } from '../../hooks/useGetTime';
 const categoryService = new CategoryService()
 const schemaValidate = Yup.object().shape({
     title: Yup.string().required("Vui lòng nhập tên Tiêu đề!"),
@@ -16,9 +17,12 @@ const FormAddCategory = () => {
         useForm({ resolver: yupResolver(schemaValidate), mode: 'onBlur', });
     const { token } = useAuth()
     const handleSubmitFormAddCategory = async (values) => {
+        const date = getDate()
+        const timestamps = getTimestamp()
+        const categories = { ...values, date, timestamps }
         try {
             if (isValid) {
-                const categoryData = await categoryService.create(token, values)
+                const categoryData = await categoryService.create(token, categories)
                 if (categoryData) {
                     toast.success(categoryData.message)
                     return

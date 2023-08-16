@@ -15,6 +15,7 @@ const Post = new Schema(
         id_image: { type: String, default: "" },
         status: { type: String, default: "pending" },
         likes: { type: Array, default: [String] },
+        authorType: { type: String, default: "customer" },
     },
     {
         timestamps: true,

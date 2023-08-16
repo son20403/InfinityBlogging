@@ -43,12 +43,16 @@ const Header = () => {
     const navigate = useNavigate();
 
     const [openSearch, setOpenSearch] = useState(false);
-    const { token, infoUser, setAccessToken, setInfoUser, deteteToken, deleteUserInfo } = useAuth();
-    const handleLogout = () => {
+    const { token, info, setAccessToken, setInfo, deleteToken, deleteInfo } = useAuth();
+    console.log("🚀 ~ file: Header.jsx:47 ~ Header ~ token:", token)
+    const logOut = () => {
         setAccessToken('')
-        setInfoUser('')
-        deteteToken()
-        deleteUserInfo()
+        setInfo('')
+        deleteToken()
+        deleteInfo()
+    }
+    const handleLogout = () => {
+        logOut()
         toast.success("Đăng xuất thành công!", { pauseOnHover: false })
     }
     const handleGetDataPost = async () => {
@@ -60,17 +64,13 @@ const Header = () => {
             navigate('/not-found')
         }
     }
-    const [query, setQuery] = useState('');
-
-    const handleSubmitSearch = (e) => {
-        e.preventDefault()
-        navigate(`/list-all-post?query=${query}`)
-        setOpenSearch(false)
-    }
 
     useEffect(() => {
         handleGetDataPost()
-    }, []);
+        if (!token) {
+            logOut()
+        }
+    }, [token]);
     return (
         <>
             <header className=' page-container flex justify-between items-center py-4 border-b'>
@@ -92,14 +92,14 @@ const Header = () => {
                     </div>
                     <UserSetting isUser={token ? true : false} onClick={handleLogout}>
                         {token ?
-                            <Avatar urlImage={infoUser?.image}></Avatar>
+                            <Avatar urlImage={info?.image}></Avatar>
                             :
                             <Avatar></Avatar>
                         }
                     </UserSetting>
                 </div>
             </header>
-            <ModalAdvanced visible={openSearch} onClose={() => setOpenSearch(false)} heading='Search'>
+            <ModalAdvanced visible={openSearch} onClose={() => setOpenSearch(false)}>
                 <div className='w-[800px]'>
                     <FormSearch setOpenSearch={() => setOpenSearch(false)}></FormSearch>
                 </div>

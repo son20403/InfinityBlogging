@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useController } from 'react-hook-form';
 import { Label } from '../label';
 import { EyeIconOpen } from '../icon';
@@ -7,15 +7,15 @@ import { Field } from '../field';
 
 
 const Input = ({ type, name, placeholder, className = '', errors, lable,
-    children, control, value = '', isSubmitting = false, ...props }) => {
-    const { field } = useController({
+    children, control, value, isSubmitting = false, ...props }) => {
+    const { field, setValue } = useController({
         control, name, defaultValue: value
     })
     return (
         <>
             <Field>
                 <Label htmlFor={name}>{lable}:</Label>
-                <div className='relative mt-3 w-full'>
+                <div className='relative mt-1 w-full'>
                     <input type={type} id={name}
                         disabled={isSubmitting}
                         className={` py-3 text-sm  bg-gray-200 w-full rounded-lg outline-none
@@ -24,8 +24,8 @@ const Input = ({ type, name, placeholder, className = '', errors, lable,
                         transition-all
                         ${className} ${children ? 'pr-14 pl-5 ' : 'px-5'}`}
                         placeholder={`${lable}...`}
-                        {...field}
                         {...props}
+                        {...field}
                     />
                     {children}
                 </div>

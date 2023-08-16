@@ -36,18 +36,7 @@ export default class PostService {
         );
         return response.data;
     }
-    async updateCustomer(token, entity) {
-        const response = await axios.put(
-            `${this.urlEndPoint}${this.collectionName}/updateCustomer`,
-            entity, {
-            headers: {
-                "Content-Type": "multipart/form-data",
-                token: `Bearer ${token}`,
-            },
-        }
-        );
-        return response.data;
-    }
+
     async createPost(token, entity) {
         const response = await axios.post(
             `${this.urlEndPoint}${this.collectionName}/create`,
@@ -69,6 +58,18 @@ export default class PostService {
     async search(key) {
         const response = await axios.get(
             `${this.urlEndPoint}${this.collectionName}/search?key=${key}`,
+        );
+        return response.data;
+    }
+    async updatePost(token, id, entity) {
+        const response = await axios.put(
+            `${this.urlEndPoint}${this.collectionName}/updatePost?id=${id}`,
+            entity, {
+            headers: {
+                "Content-Type": "multipart/form-data",
+                token: `Bearer ${token}`,
+            },
+        }
         );
         return response.data;
     }

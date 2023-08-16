@@ -30,7 +30,7 @@ const Signin = () => {
     const navigate = useNavigate();
     const { handleSubmit, formState: { errors, isSubmitting, isValid }, control } =
         useForm({ resolver: yupResolver(schemaValidate), mode: 'onBlur', });
-    const { token, infoUser, setAccessToken, setInfoUser, deteteToken, deleteUserInfo } = useAuth()
+    const { token, setAccessToken, setInfo } = useAuth()
 
     const onSubmitHandle = async (values) => {
         try {
@@ -39,7 +39,7 @@ const Signin = () => {
                 if (auth) {
                     const { accessToken, ...info } = auth;
                     setAccessToken(accessToken)
-                    setInfoUser(info)
+                    setInfo(info)
                     toast.success("Đăng nhập thành công!", { pauseOnHover: false })
                     navigate('/')
                 } else {
@@ -67,11 +67,13 @@ const Signin = () => {
                     name={'user_name'}
                     errors={errors}
                     type={'text'}
+                    value={''}
                     lable={'Tài khoản'}></Input>
                 <Input
                     control={control}
                     name={'password'}
                     errors={errors}
+                    value={''}
                     type={toggleShowPassword ? 'text' : 'password'}
                     lable={'Mật khẩu'}
                 >

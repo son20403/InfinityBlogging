@@ -4,6 +4,7 @@ const generateAccessToken = (customer) => {
     return jwt.sign(
         {
             id: customer._id,
+            role: customer.role,
             admin: customer.admin,
             username: customer.user_name,
             avatar: customer.image,
@@ -19,6 +20,7 @@ const generateRefreshToken = (customer) => {
         {
             id: customer._id,
             admin: customer.admin,
+            role: customer.role,
             username: customer.user_name,
             avatar: customer.avatar,
         },

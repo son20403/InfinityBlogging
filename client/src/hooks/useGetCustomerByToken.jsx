@@ -12,9 +12,13 @@ export default function useGetCustomerByToken(token) {
     const handleGetDataCustomer = async () => {
         setIsLoading(true)
         try {
-            const data = await authService.getDataCustomer(token);
-            if (!data) return setDataCustomerByToken([])
-            setDataCustomerByToken(data)
+            if (token) {
+                const data = await authService.getDataCustomer(token);
+                if (!data) return setDataCustomerByToken([])
+                setDataCustomerByToken(data)
+            } else {
+                return setDataCustomerByToken([])
+            }
         } catch (error) {
             console.log(error);
             navigate('/not-found')
@@ -23,7 +27,6 @@ export default function useGetCustomerByToken(token) {
     }
     useEffect(() => {
         handleGetDataCustomer()
-        return () => handleGetDataCustomer()
-    }, []);
+    }, [token]);
     return { dataCustomerByToken, handleGetDataCustomer, isLoading }
 }

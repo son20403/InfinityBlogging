@@ -70,17 +70,20 @@ const Signup = () => {
                     name={'user_name'}
                     errors={errors}
                     type={'text'}
+                    value={''}
                     lable={'Tài khoản'}></Input>
                 <Input
                     control={control}
                     name={'full_name'}
                     errors={errors}
                     type={'text'}
+                    value={''}
                     lable={'Họ và tên'}></Input>
                 <Input
                     control={control}
                     name={'password'}
                     errors={errors}
+                    value={''}
                     type={toggleShowPassword ? 'text' : 'password'}
                     lable={'Mật khẩu'}
                 >
@@ -94,6 +97,7 @@ const Signup = () => {
                     control={control}
                     name={'password_confirmation'}
                     errors={errors}
+                    value={''}
                     type={toggleShowPasswordConfirmation ? 'text' : 'password'}
                     lable={'Nhập lại mật khẩu'}>
                     {
@@ -106,6 +110,7 @@ const Signup = () => {
                     control={control}
                     name={'email'}
                     errors={errors}
+                    value={''}
                     type={'email'}
                     lable={'Email'}></Input>
 

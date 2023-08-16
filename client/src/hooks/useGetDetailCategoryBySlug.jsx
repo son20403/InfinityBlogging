@@ -28,7 +28,6 @@ export default function useGetDetailCategoryBySlug(slug) {
     }
     useEffect(() => {
         handleGetDetailCategoryBySlug()
-        return () => handleGetDetailCategoryBySlug()
     }, [slug]);
     return { dataCategoryBySlug, isLoading }
 }

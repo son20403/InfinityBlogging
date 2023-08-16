@@ -26,7 +26,6 @@ export default function useGetAllCommentByPost(id) {
     }
     useEffect(() => {
         handleGetDataCommentByPost()
-        return () => handleGetDataCommentByPost()
     }, [id]);
     return { dataCommentByPost, handleGetDataCommentByPost, isLoading }
 }

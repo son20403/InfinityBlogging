@@ -13,12 +13,14 @@ import useGetDetailCustomer from '../hooks/useGetDetailCustomer';
 import useGetAllPostByCustomer from '../hooks/useGetAllPostByCustomer';
 import EditInfoUser from '../components/post-item/EditInfoUser';
 import Pagination from '../components/post-item/Pagination';
+import useGetCustomerByToken from '../hooks/useGetCustomerByToken';
 
 const InfoUser = () => {
 
     const { id } = useParams();
-    const { infoUser } = useAuth();
-    const { dataCustomer, handleGetDataCustomer, isLoading } = useGetDetailCustomer(id)
+    const { token } = useAuth();
+    const { dataCustomerByToken } = useGetCustomerByToken(token)
+    const { dataCustomer, isLoading, handleGetDataDetailCustomer } = useGetDetailCustomer(id)
     const { dataPostByCustomer } = useGetAllPostByCustomer(id)
 
     const [openEditInfo, setOpenEditInfo] = useState(false);
@@ -26,7 +28,7 @@ const InfoUser = () => {
 
     const total = dataPostByCustomer.length
     const totalViews = dataPostByCustomer.reduce((total, post) => total + post.views, 0)
-    const isValidUser = dataCustomer?._id === infoUser?._id
+    const isValidUser = dataCustomer?._id === dataCustomerByToken?.customer?.id
 
     const postsPerPage = 6;
     const indexOfLastPost = currentPage * postsPerPage;
@@ -34,7 +36,7 @@ const InfoUser = () => {
     const currentPosts = dataPostByCustomer?.slice(indexOfFirstPost, indexOfLastPost);
 
     useEffect(() => {
-        handleGetDataCustomer()
+        handleGetDataDetailCustomer()
     }, [id]);
     return (
         <>
@@ -94,7 +96,7 @@ const InfoUser = () => {
                 </section>
             </div>
             <EditInfoUser id={id} show={openEditInfo} setShow={setOpenEditInfo}
-                setInfoCustomer={handleGetDataCustomer}></EditInfoUser>
+                setInfoCustomer={handleGetDataDetailCustomer}></EditInfoUser>
         </>
     );
 };

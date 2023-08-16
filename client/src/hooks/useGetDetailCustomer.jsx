@@ -8,7 +8,7 @@ export default function useGetDetailCustomer(id) {
     const [dataCustomer, setDataCustomer] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
 
-    const handleGetDataCustomer = async () => {
+    const handleGetDataDetailCustomer = async () => {
         setIsLoading(true)
         try {
             if (id) {
@@ -21,13 +21,12 @@ export default function useGetDetailCustomer(id) {
         } catch (error) {
             console.log(error);
             // toast.error("Có lỗi xảy ra khi lấy người dùng!")
-            navigate('/not-found')
+            // navigate('/not-found')
         }
         setIsLoading(false)
     }
     useEffect(() => {
-        handleGetDataCustomer()
-        return () => handleGetDataCustomer()
+        handleGetDataDetailCustomer()
     }, [id]);
-    return { dataCustomer, handleGetDataCustomer, isLoading }
+    return { dataCustomer, handleGetDataDetailCustomer, isLoading }
 }

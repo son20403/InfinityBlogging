@@ -11,15 +11,9 @@ export default class CustomerService {
         );
         return response.data;
     }
-    async detail(id) {
-        const response = await axios.get(
-            `${this.urlEndPoint}${this.collectionName}/detail?id=${id}`,
-        );
-        return response.data;
-    }
     async detailCustomer(id) {
         const response = await axios.get(
-            `${this.urlEndPoint}${this.collectionName}/detailCustomer?id=${id}`,
+            `${this.urlEndPoint}${this.collectionName}/detail?id=${id}`,
         );
         return response.data;
     }

@@ -25,7 +25,6 @@ export default function useGetAllCategory() {
     }
     useEffect(() => {
         handleGetDataCategory()
-        return () => handleGetDataCategory()
     }, []);
     return { dataCategory, handleGetDataCategory, isLoading }
 }

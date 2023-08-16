@@ -242,11 +242,12 @@
 /* width */
 ::-webkit-scrollbar {
   width: 5px;
+  height: 5px;
 }
 
 /* Track */
 ::-webkit-scrollbar-track {
-  /* background: transparent; */
+  background: transparent;
 }
 
 /* Handle */

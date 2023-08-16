@@ -26,7 +26,6 @@ const FormAddPost = () => {
 
     const { token } = useAuth()
     const { dataCategory, handleGetDataCategory } = useGetAllCategory()
-
     const handleSubmitFormAddPost = async (values) => {
         const date = getDate()
         const timestamps = getTimestamp()
@@ -37,7 +36,6 @@ const FormAddPost = () => {
                 if (postData) {
                     toast.success(postData.message)
                     reset({ category: '', content: '', image: null, title: '' })
-
                     return
                 } else {
                     toast.error(postData.message || "Có lỗi xảy ra!")
@@ -62,6 +60,7 @@ const FormAddPost = () => {
                             control={control}
                             name={'title'}
                             errors={errors}
+                            value={''}
                             type={'text'}
                             lable={'Tiêu đề'}></Input>
                         <div className='row-span-2'>
@@ -69,6 +68,7 @@ const FormAddPost = () => {
                                 control={control}
                                 name={'image'}
                                 errors={errors}
+                                value={''}
                                 lable={'Hình ảnh'}>
                             </FileInput>
                         </div>
@@ -76,11 +76,12 @@ const FormAddPost = () => {
                             control={control}
                             name={'category'}
                             errors={errors}
+                            value={''}
                             lable={'Loại'}
                             data={dataCategory}
                         >
                         </Select>
-                        <div className='col-span-2'>
+                        <div className='col-span-2 mt-20'>
                             <Textarea control={control} name={'content'} errors={errors}></Textarea>
                         </div>
                     </div>

@@ -1,4 +1,4 @@
-import { faEye } from '@fortawesome/free-regular-svg-icons';
+import { faEye, faPenToSquare } from '@fortawesome/free-regular-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React from 'react';
 import Avatar from './Avatar';
@@ -11,9 +11,11 @@ import Time from '../text/Time';
 import useTimeSince from '../../hooks/useTimeSince';
 import ButtonLike from '../button/ButtonLike';
 
-const BlogItem = ({ isSingle = false, isDetail = false, data, isLiked = false, totalLikes, handleLikePost = () => { } }) => {
+const BlogItem = ({ isSingle = false, isDetail = false, data, isLiked = false, totalLikes, id_author,
+    setOpenEditPost = () => { }, handleLikePost = () => { } }) => {
     const { dataCustomer } = useGetDetailCustomer(data?.id_customer)
     const { dataCategory } = useGetDetailCategory(data?.category)
+    const isAuthor = dataCustomer?._id === id_author
     const timeSince = useTimeSince()
     return (
         <div className='mb-3 flex flex-col '>
@@ -44,6 +46,12 @@ const BlogItem = ({ isSingle = false, isDetail = false, data, isLiked = false, t
                     {data?.views > 999 ? `${String(data?.views).slice(0, 1)}k` : data?.views}
                     {isDetail || isSingle ? ' lượt xem' : <FontAwesomeIcon icon={faEye} />}
                 </div>
+                {isDetail && isAuthor &&
+                    <FontAwesomeIcon
+                        className='cursor-pointer text-gray-500'
+                        icon={faPenToSquare}
+                        onClick={() => setOpenEditPost(true)} />
+                }
                 {isDetail && (
                     <ButtonLike isLiked={isLiked} totalLikes={totalLikes} onClick={handleLikePost} />
                 )}

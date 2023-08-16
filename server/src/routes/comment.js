@@ -1,12 +1,11 @@
 import express from 'express'
 const router = express.Router()
-import CommentController from '../controllers/CommentController'
+import commentController from '../controllers/CommentController'
 import middlewareAuth from '../middlewares/auth'
 
-router.post('/create', middlewareAuth.verifyToken, CommentController.create)
-router.get('/getAll', CommentController.getAll)
-router.get('/getByPost', CommentController.getByPost)
-router.get('/detailCategory?:id', CommentController.detailCategory)
-router.get('/detail', CommentController.detail)
+router.post('/create', middlewareAuth.verifyToken, commentController.create)
+router.get('/getAll', commentController.getAll)
+router.get('/getByPost', commentController.getByPost)
+router.get('/detailCategory?:id', commentController.detail)
 
 module.exports = router;

@@ -19,6 +19,7 @@ module.exports = {
     "no-unused-vars": "off",
     "no-console": "off",
     "react/prop-types": "off",
-    'react-refresh/only-export-components': 'off'
+    'react-refresh/only-export-components': 'off',
+    "react/display-name": "off"
   },
 }

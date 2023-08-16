@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
-import { faComment } from '@fortawesome/free-regular-svg-icons';
+import { faComment, faPenToSquare } from '@fortawesome/free-regular-svg-icons';
 import { useNavigate, useParams } from 'react-router-dom';
 
 import CategoryItem from '../components/post-item/CategoryItem';
@@ -18,6 +18,7 @@ import { useAuth } from '../contexts/authContext';
 import { toast } from 'react-toastify';
 import FormSearch from '../components/post-item/FormSearch';
 import useGetDetailCategory from '../hooks/useGetDetailCategory';
+import EditPost from '../components/post-item/EditPost';
 
 const postService = new PostService()
 const authService = new AuthService()
@@ -37,6 +38,7 @@ const Detail = () => {
     const [totalComment, setTotalComment] = useState(0);
     const [dataCustomerByToken, setDataCustomerByToken] = useState();
     const [totalLikes, setTotalLikes] = useState(0);
+    const [openEditPost, setOpenEditPost] = useState(false);
 
     const likes = dataDetailPost?.likes
     const isLiked = likes?.some((id) => id === dataCustomerByToken?.id);
@@ -85,7 +87,8 @@ const Detail = () => {
             <div className='page-container my-10 '>
                 <div className='grid grid-cols-3 gap-10'>
                     <div className='col-span-2'>
-                        <BlogItem isSingle isDetail data={dataDetailPost} handleLikePost={handleLikePost}
+                        <BlogItem setOpenEditPost={setOpenEditPost} id_author={dataCustomerByToken?.id}
+                            isSingle isDetail data={dataDetailPost} handleLikePost={handleLikePost}
                             isLiked={isLiked} totalLikes={totalLikes}></BlogItem>
                         <label htmlFor="content" >
                             <div ref={stickyDom}
@@ -120,7 +123,10 @@ const Detail = () => {
                 </div>
             </div>
             <Comment setTotalComment={setTotalComment}
-                id_post={dataDetailPost?._id} id_customer={dataDetailPost?.id_customer} setShowComment={setShowComment} showComment={showComment}></Comment>
+                id_post={dataDetailPost?._id} id_customer={dataDetailPost?.id_customer}
+                setShowComment={setShowComment} showComment={showComment}></Comment>
+            <EditPost slug={slug} show={openEditPost} setShow={setOpenEditPost}
+                setDetailPost={handleGetDetailPost}></EditPost>
         </>
     );
 };

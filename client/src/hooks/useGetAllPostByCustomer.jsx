@@ -28,7 +28,6 @@ export default function useGetAllPostByCustomer(id) {
     }
     useEffect(() => {
         handleGetDataPostByCustomer()
-        return () => handleGetDataPostByCustomer()
     }, [id]);
     return { dataPostByCustomer, isLoading }
 }

@@ -22,8 +22,6 @@ export default function useGetAllCustomer() {
     }
     useEffect(() => {
         handleGetDataCustomer()
-        return () => handleGetDataCustomer()
-
     }, []);
-    return { dataCustomer, isLoading }
+    return { dataCustomer, handleGetDataCustomer, isLoading }
 }

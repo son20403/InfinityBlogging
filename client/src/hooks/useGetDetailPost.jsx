@@ -27,7 +27,6 @@ export default function useGetDetailPost(slug) {
     }
     useEffect(() => {
         handleGetDetailPost()
-        return () => handleGetDetailPost()
     }, [slug]);
     return { dataDetailPost, isLoading, handleGetDetailPost }
 }

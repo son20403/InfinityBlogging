@@ -19,7 +19,6 @@ export default function useGetAllPost() {
     }
     useEffect(() => {
         handleGetDataPost()
-        return () => handleGetDataPost()
     }, []);
-    return { dataPost, isLoading }
+    return { dataPost, handleGetDataPost, isLoading }
 }

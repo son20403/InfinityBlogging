@@ -28,7 +28,6 @@ export default function useGetDetailCategory(id) {
     }
     useEffect(() => {
         handleGetDetailCategory()
-        return () => handleGetDetailCategory()
     }, [id]);
     return { dataCategory, isLoading }
 }

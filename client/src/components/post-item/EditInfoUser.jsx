@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { FileInput, Input } from '../input';
 import { Button } from '../button';
 import ModalAdvanced from '../modal/ModalAdvanced';
@@ -22,9 +22,9 @@ const schemaValidate = Yup.object().shape({
 
 const customerService = new CustomerService()
 const EditInfoUser = ({ show, setShow = () => { }, id, setInfoCustomer = () => { } }) => {
-    const { dataCustomer } = useGetDetailCustomer(id)
+    const { dataCustomer, handleGetDataDetailCustomer } = useGetDetailCustomer(id)
 
-    const { token, setInfoUser } = useAuth();
+    const { token, setInfo } = useAuth();
 
     const { handleSubmit, formState: { errors, isSubmitting, isValid }, control }
         = useForm({ resolver: yupResolver(schemaValidate), mode: 'onBlur' })
@@ -34,7 +34,7 @@ const EditInfoUser = ({ show, setShow = () => { }, id, setInfoCustomer = () => {
             if (isValid && token) {
                 const customer = await customerService.updateCustomer(token, values)
                 if (customer) {
-                    setInfoUser(customer.others)
+                    setInfo(customer.others)
                     toast.success(customer.message)
                 } else {
                     toast.error(customer.message || "Có lỗi xảy ra!")
@@ -48,6 +48,9 @@ const EditInfoUser = ({ show, setShow = () => { }, id, setInfoCustomer = () => {
         setShow(false)
         setInfoCustomer()
     }
+    useEffect(() => {
+        handleGetDataDetailCustomer()
+    }, [dataCustomer]);
 
     return (
         <>
@@ -71,6 +74,7 @@ const EditInfoUser = ({ show, setShow = () => { }, id, setInfoCustomer = () => {
                             lable={'Họ và tên'}></Input>
                         <div className='row-span-2'>
                             <FileInput
+                                oldImage={dataCustomer.image}
                                 control={control}
                                 name={'image'}
                                 errors={errors}

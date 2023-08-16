@@ -13,9 +13,18 @@ const middlewareAuth = {
       next();
     });
   },
+  verifyTokenStaff: (req, res, next) => {
+    middlewareAuth.verifyToken(req, res, () => {
+      if (req.customer.admin && req.customer.role === 'staff') {
+        next();
+      } else {
+        res.status(403).json("You're not authenticated staff");
+      }
+    });
+  },
   verifyTokenAdmin: (req, res, next) => {
     middlewareAuth.verifyToken(req, res, () => {
-      if (req.customer.admin) {
+      if (req.customer.admin && req.customer.role === 'admin') {
         next();
       } else {
         res.status(403).json("You're not authenticated admin");

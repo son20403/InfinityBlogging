@@ -19,7 +19,6 @@ export default function useGetSearchPost(key) {
     }
     useEffect(() => {
         handleGetDataSearchPost(key)
-        return () => handleGetDataSearchPost(key)
     }, [key]);
     return { dataSearchPost, handleGetDataSearchPost, isLoading, setIsLoading }
 }

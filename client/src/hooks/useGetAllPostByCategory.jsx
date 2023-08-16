@@ -28,7 +28,6 @@ export default function useGetAllPostByCategory(id) {
     }
     useEffect(() => {
         handleGetDataPostByCategory()
-        return () => handleGetDataPostByCategory()
     }, [id]);
     return { dataPostByCategory, isLoading }
 }

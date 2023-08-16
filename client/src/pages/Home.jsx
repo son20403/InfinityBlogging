@@ -90,9 +90,7 @@ const Home = () => {
                 {dataPostOther?.length > 0 ? dataPostOther?.map((post) => (
                     <BlogItem key={post?._id} data={post}></BlogItem>
                 )) : <>
-                    <BlogItemLoading></BlogItemLoading>
-                    <BlogItemLoading></BlogItemLoading>
-                    <BlogItemLoading></BlogItemLoading>
+
                 </>}
             </SectionField>
         </div>

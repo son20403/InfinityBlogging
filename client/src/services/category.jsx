@@ -22,13 +22,13 @@ export default class CategoryService {
     }
     async detailCategory(id) {
         const response = await axios.get(
-            `${this.urlEndPoint}${this.collectionName}/detailCategory?id=${id}`,
+            `${this.urlEndPoint}${this.collectionName}/detail?id=${id}`,
         );
         return response.data;
     }
     async detailCategoryBySlug(slug) {
         const response = await axios.get(
-            `${this.urlEndPoint}${this.collectionName}/detailCategoryBySlug?slug=${slug}`,
+            `${this.urlEndPoint}${this.collectionName}/detailBySlug?slug=${slug}`,
         );
         return response.data;
     }

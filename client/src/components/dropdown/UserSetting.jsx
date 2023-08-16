@@ -5,6 +5,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBlog, faCircleInfo, faRightFromBracket, faRightToBracket, faUserPlus } from '@fortawesome/free-solid-svg-icons';
 import { Link, NavLink } from 'react-router-dom';
 import { useAuth } from '../../contexts/authContext';
+import useGetCustomerByToken from '../../hooks/useGetCustomerByToken';
 
 
 const navListNotUser = [
@@ -24,11 +25,12 @@ const navListNotUser = [
 ]
 
 const UserSetting = ({ children, onClick = () => { }, isUser }) => {
-    const { infoUser } = useAuth()
+    const { token } = useAuth()
+    const { dataCustomerByToken } = useGetCustomerByToken(token)
     const navListHasUser = [
         {
             id: 1,
-            to: `/info-user/${infoUser?._id}`,
+            to: `/info-user/${dataCustomerByToken?.customer?.id}`,
             title: 'Thông tin cá nhân',
             icon: faCircleInfo
         },

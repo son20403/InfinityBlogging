@@ -1,21 +1,21 @@
-import { createContext, useContext, useEffect, useState } from "react";
+import { createContext, useContext } from "react";
 import useCookie from "../hooks/useCookie";
 import useLocalStorage from "../hooks/useLocalStrorage";
 
 const AuthContext = createContext();
-const AuthProvider = (props) => {
+const AuthProvider = ({ model = 'tokenUser', infoModel = 'infoUser', ...props }) => {
     const {
         cookie: token,
         setCookie: setAccessToken,
-        deleteCookie: deteteToken
-    } = useCookie('token')
+        deleteCookie: deleteToken
+    } = useCookie(model)
     const {
-        storedValue: infoUser,
-        setValue: setInfoUser,
-        removeValue: deleteUserInfo
-    } = useLocalStorage('userInfo');
+        storedValue: info,
+        setValue: setInfo,
+        removeValue: deleteInfo
+    } = useLocalStorage(infoModel);
 
-    const values = { token, infoUser, setAccessToken, setInfoUser, deteteToken, deleteUserInfo }
+    const values = { token, info, setAccessToken, setInfo, deleteToken, deleteInfo }
     return <AuthContext.Provider value={values} {...props}></AuthContext.Provider>
 }
 const useAuth = () => {

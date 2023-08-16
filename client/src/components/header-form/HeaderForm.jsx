@@ -1,6 +1,6 @@
 import React from 'react';
 
-const HeaderForm = ({ children, urlImage = './src/assets/infinity.png', className = '' }) => {
+const HeaderForm = ({ children, urlImage = '../src/assets/infinity.png', className = '' }) => {
     return (
         <>
             <div className='header flex flex-col justify-center items-center '>

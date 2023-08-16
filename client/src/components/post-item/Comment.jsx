@@ -71,6 +71,7 @@ const Comment = ({ showComment, setShowComment, id_post, setTotalComment = () =>
                             <div className='w-full   mt-0 relative my-10'>
                                 <Input lable={'Nội dung bình luận'} control={control}
                                     isSubmitting={isSubmitting}
+                                    value={''}
                                     name={'content'} errors={errors}>
                                     <button
                                         disabled={isSubmitting}
